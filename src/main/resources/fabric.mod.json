@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "tog",
+	"version": "${version}",
+	"name": "Tog Mod 1.19.3",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Jofresh",
+		"BrFhoxt"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/tog/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "net.hh.tog.TogMod"
+		],
+		"client": [
+			"net.hh.tog.TogModClient"
+		],
+		"fabric-datagen": [
+			"net.hh.tog.TogModDataGenerator"
+		]
+	},
+	"mixins": [
+		"tog.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.13",
+		"minecraft": "~1.19.3",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
