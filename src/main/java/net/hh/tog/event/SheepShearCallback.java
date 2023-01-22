@@ -13,17 +13,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public interface SheepShearCallback {
 
     Event<SheepShearCallback> EVENT = EventFactory.createArrayBacked(SheepShearCallback.class,
-            (listeners) -> (shearedSoundCategory, ci) -> {
-        for (SheepShearCallback listener : listeners) {
-            ActionResult result = listener.interact(shearedSoundCategory, ci);
+            (listeners) -> (player, sheep, hand) -> {
+                for (SheepShearCallback listener : listeners) {
+                    ActionResult result = listener.interact(player, sheep, hand);
 
-            if (result != ActionResult.PASS)
-                return result;
-        }
-           return ActionResult.PASS;
+                    if (result != ActionResult.PASS)
+                        return result;
+                }
+                return ActionResult.PASS;
             });
 
     ActionResult interact(PlayerEntity player, SheepEntity sheep, Hand hand);
-
-    ActionResult interact(SoundCategory shearedSoundCategory, CallbackInfo ci);
 }

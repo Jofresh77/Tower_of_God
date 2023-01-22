@@ -17,15 +17,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class SheepShearMixin {
     @Inject(at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/entity/passive/SheepEntity;dropItem(Lnet/minecraft/item/ItemConvertible;I)Lnet/minecraft/entity/ItemEntity;"),
-            method = "sheared",
+            target = "Lnet/minecraft/entity/passive/AnimalEntity;interactMob(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;"),
+            method = "interactMob",
             cancellable = true)
-    private void onShear(SoundCategory shearedSoundCategory, CallbackInfo ci) {
+    private void onShear(final PlayerEntity player,final Hand hand,final CallbackInfoReturnable<Boolean> info) {
         //ActionResult result = SheepShearCallback.EVENT.invoker().interact(player, (SheepEntity) (Object) this, hand);
-        ActionResult result = SheepShearCallback.EVENT.invoker().interact(shearedSoundCategory, ci);
+        ActionResult result = SheepShearCallback.EVENT.invoker().interact( player,  (SheepEntity) (Object) this, hand);
 
         if (!(result == ActionResult.PASS)) {
-            ci.cancel();
+            info.cancel();
         }
     }
 }

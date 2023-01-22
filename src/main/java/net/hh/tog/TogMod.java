@@ -2,9 +2,12 @@ package net.hh.tog;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.hh.tog.event.SheepShearCallback;
 import net.hh.tog.item.ModItems;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;;
 import net.minecraft.item.Items;
@@ -23,17 +26,21 @@ public class TogMod implements ModInitializer {
         ModItems.registerModItems();
 
         SheepShearCallback.EVENT.register(((player, sheep, hand) -> {
-            ItemStack itemStack = player.getStackInHand(hand);
-            if (itemStack.isOf(Items.SHEARS)) {
-                sheep.setSheared(true);
+            sheep.setSheared(true);
 
-                ItemStack stack = new ItemStack(ModItems.EXPRESS_TICKET);
-                ItemEntity itemEntity = new ItemEntity(player.world, sheep.getX(), sheep.getY(), sheep.getZ(), stack);
-                player.world.spawnEntity(itemEntity);
-                return ActionResult.PASS;
+            ItemStack stack = new ItemStack(ModItems.EXPRESS_TICKET);
+            ItemEntity itemEntity = new ItemEntity(player.world, sheep.getX(), sheep.getY(), sheep.getZ(), stack);
+            player.world.spawnEntity(itemEntity);
+            return ActionResult.PASS;
+        }));
+
+        AttackBlockCallback.EVENT.register(((player, world, hand, pos, direction) -> {
+            BlockState state = world.getBlockState(pos);
+            if (state.isToolRequired() && !player.isSpectator() &&
+            player.getMainHandStack().isEmpty()) {
+                player.damage(DamageSource.GENERIC, 1.0f);
             }
-
-            return ActionResult.FAIL;
+            return ActionResult.PASS;
         }));
     }
 }
