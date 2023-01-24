@@ -18,6 +18,8 @@ public class TogMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+
 		ModItems.registerModItems();
+		
 	}
 }
