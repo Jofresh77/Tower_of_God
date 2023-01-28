@@ -3,7 +3,7 @@ package net.hh.tog;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.hh.tog.gui.MyFirstScreen;
+import net.hh.tog.gui.MyScreen;
 import net.hh.tog.item.ModItems;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -21,6 +21,5 @@ public class TogMod implements ModInitializer {
 	public void onInitialize() {
 
 		ModItems.registerModItems();
-		MyFirstScreen.build();
 	}
 }
